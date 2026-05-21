@@ -1,0 +1,380 @@
+/* RESET PADRÃO */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa; /* Cinza bem claro idêntico ao fundo da imagem */
+    color: #334155;
+}
+
+.app-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR (BARRA LATERAL) */
+.sidebar {
+    width: 260px;
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.logo-area h2 {
+    color: #0f172a;
+    font-size: 1.25rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-back {
+    text-decoration: none;
+    color: #64748b;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s;
+}
+
+.btn-back:hover {
+    color: #0f172a;
+}
+
+.menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nav-item {
+    text-decoration: none;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #475569;
+    font-weight: 500;
+    transition: all 0.2s;
+}
+
+.nav-item:hover {
+    background-color: #f1f5f9;
+}
+
+.nav-item.active {
+    background-color: #eff6ff;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+/* CONTEÚDO PRINCIPAL */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TOP HEADER */
+.top-header {
+    height: 70px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+}
+
+.search-bar {
+    position: relative;
+    width: 400px;
+}
+
+.search-bar i {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 10px 16px 10px 44px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    outline: none;
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+}
+
+.search-bar input:focus {
+    border-color: #cbd5e1;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 1.15rem;
+    color: #64748b;
+    cursor: pointer;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #334155;
+}
+
+/* AREA DO DASHBOARD */
+.dashboard-body {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.page-title {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.title-icon {
+    background-color: #f0fdf4;
+    color: #16a34a;
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.page-title h1 {
+    font-size: 1.5rem;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.page-title p {
+    font-size: 0.9rem;
+    color: #64748b;
+}
+
+/* CARDS GRID */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.card {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.card-info span {
+    font-size: 0.85rem;
+    color: #64748b;
+    font-weight: 500;
+}
+
+.card-info strong {
+    font-size: 1.5rem;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+/* Variantes de cores dos Cards */
+.status-recebido .card-icon { background-color: #f0fdf4; color: #16a34a; }
+.status-pendente .card-icon { background-color: #eff6ff; color: #2563eb; }
+.status-vencido .card-icon { background-color: #fef2f2; color: #ef4444; }
+.status-previsao .card-icon { background-color: #faf5ff; color: #a855f7; }
+
+/* ATALHOS CAIXAS */
+.shortcuts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.shortcut-box {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.shortcut-box:hover {
+    border-color: #cbd5e1;
+    transform: translateY(-1px);
+}
+
+.shortcut-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.shortcut-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.shortcut-icon.blue { background-color: #f0fdfa; color: #0d9488; }
+.shortcut-icon.green { background-color: #f8fafc; color: #475569; }
+
+.shortcut-left h3 {
+    font-size: 1rem;
+    color: #0f172a;
+    font-weight: 600;
+}
+
+.shortcut-left p {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.arrow-go {
+    color: #94a3b8;
+}
+
+/* TABELA DE FATURAS */
+.recent-requests {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+}
+
+.requests-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.requests-header h2 {
+    font-size: 1.1rem;
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.requests-header a {
+    text-decoration: none;
+    color: #64748b;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.financial-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.financial-table th {
+    padding: 12px 16px;
+    color: #64748b;
+    font-weight: 600;
+    border-bottom: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+}
+
+.financial-table td {
+    padding: 16px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+}
+
+.no-data {
+    text-align: center;
+    color: #94a3b8;
+    padding: 32px !important;
+}
+
+/* BADGES DE STATUS */
+.badge {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.775rem;
+    font-weight: 600;
+}
+
+.badge-pendente {
+    background-color: #eff6ff;
+    color: #1d4ed8;
+}
+
+.badge-pago {
+    background-color: #f0fdf4;
+    color: #15803d;
+}
+.badge-vencido{
+    background-color: rgba(194, 27, 27, 0.664);
+    color: white;
+}
