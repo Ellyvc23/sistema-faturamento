@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -16,12 +15,12 @@
                 <h2><i class="fa-solid fa-wallet"></i> FinTech_Lab</h2>
             </div>
             
-            <a href="#" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Sair do Painel</a>
+            <a href="index.php" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Sair do Painel</a>
             
             <nav class="menu-nav">
-                <a href="#" class="nav-item active"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-file-invoice-dollar"></i> Faturas</a>
-                <a href="#" class="nav-item"><i class="fa-solid fa-users"></i> Clientes</a>
+                <a href="index.php" class="nav-item active"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+                <a href="index.php?acao=nova" class="nav-item"><i class="fa-solid fa-file-invoice-dollar"></i> Faturas</a>
+                <a href="index.php?acao=cliente" class="nav-item"><i class="fa-solid fa-users"></i> Clientes</a>
             </nav>
         </aside>
 
@@ -29,7 +28,9 @@
             <header class="top-header">
                 <div class="search-bar">
                     <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Buscar por cliente ou código da fatura...">
+                    <form method="GET" action="index.php">
+                        <input type="text" name="busca" placeholder="Buscar por cliente ou código da fatura...">
+                    </form>
                 </div>
                 
                 <div class="header-actions">
@@ -37,7 +38,7 @@
                     <button class="icon-btn"><i class="fa-regular fa-bell"></i></button>
                     <div class="user-profile">
                         <i class="fa-regular fa-circle-user"></i>
-                        <span>Admin / Dev</span>
+                        <span>Admin</span>
                     </div>
                 </div>
             </header>
@@ -64,7 +65,7 @@
                         <div class="card-icon"><i class="fa-regular fa-clock"></i></div>
                         <div class="card-info">
                             <span>Aguardando Pagamento</span>
-                            <strong>R$<?= number_format($totalPendente, 2, ',', '.'); ?></strong>
+                            <strong>R$ <?= number_format($totalPendente, 2, ',', '.'); ?></strong>
                         </div>
                     </div>
 
@@ -80,13 +81,13 @@
                         <div class="card-icon"><i class="fa-solid fa-arrow-trend-up"></i></div>
                         <div class="card-info">
                             <span>Previsão de Receita</span>
-                            <strong>R$ 0,00</strong>
+                            <strong>R$ <?= number_format($totalPrevisao, 2, ',', '.'); ?></strong>
                         </div>
                     </div>
                 </div>
 
                 <div class="shortcuts-grid">
-                    <div class="shortcut-box">
+                    <a href="index.php?acao=nova" class="shortcut-box" style="text-decoration: none; color: inherit;">
                         <div class="shortcut-left">
                             <div class="shortcut-icon blue"><i class="fa-solid fa-plus"></i></div>
                             <div>
@@ -95,9 +96,9 @@
                             </div>
                         </div>
                         <i class="fa-solid fa-arrow-right arrow-go"></i>
-                    </div>
+                    </a>
 
-                    <div class="shortcut-box">
+                    <a href="index.php?acao=imprimir" target="_blank" class="shortcut-box" style="text-decoration: none; color: inherit;">
                         <div class="shortcut-left">
                             <div class="shortcut-icon green"><i class="fa-solid fa-file-export"></i></div>
                             <div>
@@ -106,7 +107,7 @@
                             </div>
                         </div>
                         <i class="fa-solid fa-arrow-right arrow-go"></i>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="recent-requests">
@@ -125,39 +126,59 @@
                                     <th>Vencimento</th>
                                     <th>Valor</th>
                                     <th>Status</th>
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php if (empty($listaFatura)): ?>
                                     <tr>
-                                        <td colspan="6" style="text-align: center;">Nenhuma fatura encontrada.</td>
+                                        <td colspan="7" style="text-align: center;">Nenhuma fatura encontrada.</td>
                                     </tr>
                                 <?php else: ?>
                                     <?php foreach($listaFatura as $fatura):?>
                                         <tr>
                                             <td><?= $fatura['id']; ?></td>
-                                            <td><?=  $fatura['nome'] ?></td>
-                                            <td><?= $fatura['data_emissao']; ?></td>
-                                            <td><?= $fatura['data_vencimento']; ?></td>
-                                            <td>R$<?= number_format($fatura['valor'], 2, ',', '.'); ?></td>
+                                            <td><?= $fatura['nome'] ?></td>
+                                            <td><?= date('d/m/Y', strtotime($fatura['data_emissao'])); ?></td>
+                                            <td><?= date('d/m/Y', strtotime($fatura['data_vencimento'])); ?></td>
+                                            <td>R$ <?= number_format($fatura['valor'], 2, ',', '.'); ?></td>
                                             <td>
-                                                <?php 
-                                                if($fatura['status'] == 'Pendente'){
-                                                    echo '<span class="badge badge-pendente">Pendente</span>';
-                                                }
-                                                elseif($fatura['status'] == 'Vencido'){
-                                                    echo '<span class="badge badge-vencido">Vencido</span>';
-                                                }
-                                                elseif($fatura['status'] == 'Pago'){
-                                                    echo '<span class="badge badge-pago">Pago</span>';
-                                                }
-                                                ?>
+                                                <div class="status-cell-container">
+                                                    <?php 
+                                                    if($fatura['status'] == 'Pendente'){
+                                                        echo '<span class="badge badge-pendente">Pendente</span>';
+                                                        echo '<a href="index.php?acao=pagar&id=' . $fatura['id'] . '" class="btn-quick-pay" title="Marcar como pago"><i class="fa-solid fa-check"></i></a>';
+                                                        echo '<a href="index.php?acao=vencida&id=' . $fatura['id'] . '" class="btn-quick-void" title="Marcar como vencido"><i class="fa-solid fa-xmark"></i></a>';
+                                                    }
+                                                    elseif($fatura['status'] == 'Vencido'){
+                                                        echo '<span class="badge badge-vencido">Vencido</span>';
+                                                        echo '<a href="index.php?acao=pagar&id=' . $fatura['id'] . '" class="btn-quick-pay" title="Marcar como pago"><i class="fa-solid fa-check"></i></a>';
+                                                    }
+                                                    elseif($fatura['status'] == 'Pago'){
+                                                        echo '<span class="badge badge-pago">Pago</span>';
+                                                    }
+                                                    ?>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="index.php?acao=excluir&id=<?= $fatura['id']; ?>" class="btn-quick-delete" title="Excluir Fatura"><i class="fa-solid fa-trash-can"></i></a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
-                                    <?php endif; ?>
-                                </tbody>
+                                <?php endif; ?>
+                            </tbody>
                         </table>
+                    </div>
+                    <div class="pagination-container">
+                        <a href="index.php?pagina=<?= $pagina - 1; ?>" class="pagination-btn <?= ($pagina <= 1) ? 'disabled' : ''; ?>">
+                            <i class="fa-solid fa-angle-left"></i> Anterior
+                        </a>
+                        
+                        <span class="pagination-info">Página <?= $pagina; ?></span>
+                        
+                        <a href="index.php?pagina=<?= $pagina + 1; ?>" class="pagination-btn">
+                            Próximo <i class="fa-solid fa-angle-right"></i>
+                        </a>
                     </div>
                 </div>
             </section>
